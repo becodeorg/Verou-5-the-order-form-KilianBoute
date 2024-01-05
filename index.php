@@ -38,7 +38,7 @@ function whatIsHappening()
 whatIsHappening();
 
 // TODO: provide some products (you may overwrite the example)
-$products = [
+$productsCereal = [
     ['name' => 'Frosted Flakes', 'price' => 3.99],
     ['name' => 'Cheerios', 'price' => 2.89],
     ['name' => 'Cocoa Puffs', 'price' => 4.25],
@@ -46,10 +46,23 @@ $products = [
     ['name' => 'Lucky Charms', 'price' => 4.75],
     ['name' => 'Cinnamon Toast Crunch', 'price' => 3.99],
     ['name' => 'Raisin Bran', 'price' => 3.29],
-    ['name' => 'Cap\'n Crunch', 'price' => 3.95],
-    ['name' => 'Special K', 'price' => 3.49],
-    ['name' => 'Granola Clusters', 'price' => 4.99]
+    ['name' => 'Cap\'n Crunch', 'price' => 3.95]
 ];
+
+$productsGranola = [
+    ['name' => 'Almond Honey Granola', 'price' => 5.99],
+    ['name' => 'Maple Pecan Granola', 'price' => 4.89],
+    ['name' => 'Coconut Crunch Granola', 'price' => 6.25],
+    ['name' => 'Mixed Berry Granola', 'price' => 5.49],
+    ['name' => 'Chocolate Hazelnut Granola', 'price' => 6.75],
+    ['name' => 'Vanilla Almond Granola', 'price' => 5.99],
+    ['name' => 'Cranberry Orange Granola', 'price' => 5.29],
+    ['name' => 'Peanut Butter Granola', 'price' => 5.95],
+    ['name' => 'Cinnamon Apple Granola', 'price' => 5.49],
+    ['name' => 'Cherry Almond Granola', 'price' => 6.99]
+];
+
+$products = isset($_GET['food']) && $_GET['food'] == 0 ? $productsGranola : $productsCereal;
 
 $totalValue = 0;
 
@@ -76,7 +89,7 @@ function validate()
 
 function handleForm()
 {
-    global $cart, $products;
+    global $cart, $products, $totalValue;
 
     // TODO: form related tasks (step 1)
     $email = htmlspecialchars($_POST['email']);
@@ -89,6 +102,7 @@ function handleForm()
     foreach ($_POST['products'] as $index) {
         if (!empty($products[$index])) {
             $cart[] = $products[$index];
+            $totalValue += $products[$index]['price'];
         }
     }
 
